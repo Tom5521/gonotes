@@ -1,7 +1,7 @@
 package runner
 
 import (
-	"os"
+	"slices"
 
 	"github.com/Tom5521/CmdRunTools/command"
 	"github.com/Tom5521/GoNotes/internal/config"
@@ -15,49 +15,55 @@ var conf = &config.MainConf
 
 func Init() {
 	flag.Parse()
-	if *flags.New == "" {
-		panic("The file name has not been specified")
+	if *flags.Help {
+		flag.PrintDefaults()
+		return
+	}
+	if *flags.Config {
+		if *flags.SetDefault != conf.Editor {
+			conf.Editor = *flags.SetDefault
+			conf.Update()
+		}
+		return
 	}
 	files.Load()
-	if *flags.Temporal {
-		CreateTmpFile()
-	} else {
-		CreateFile()
+	CatchTmp()
+	if *flags.Log {
+		PrintLogs()
+		return
+	}
+	if *flags.Delete != "" {
+		Delete()
+		return
+	}
+	if *flags.Open != "" {
+		Open()
+		return
+	}
+
+	if *flags.New != "" {
+		if *flags.Temporal {
+			CreateTmpFile()
+		} else {
+			CreateFile()
+		}
+		return
 	}
 }
 
-func CreateTmpFile() {
-	var tmpF files.File
-	t.Chdir("/tmp")
-	if t.IsNotExist("GoNotes") {
-		t.Mkdir("GoNotes")
+func CatchTmp() {
+	for _, f := range files.Files {
+		if f.Tmp {
+			if t.IsNotExist(f.Path) {
+				i := FindFileIndexByID(f.ID)
+				if i == -1 {
+					continue
+				}
+				files.Files = slices.Delete(files.Files, i, i+1)
+			}
+		}
 	}
-	t.Chdir("GoNotes")
-	tmpF.Tmp = true
-	tmpF.Path = t.Getwd() + *flags.New + *flags.Type
-}
-
-func CreateFile() {
-	var newF files.File
-	t.Chdir(t.HomeDir)
-	if t.IsNotExist(".GoNotes") {
-		t.Mkdir(".GoNotes")
-	}
-	t.Chdir(".GoNotes")
-	newF.Path = t.HomeDir + "/.GoNotes/" + *flags.New + *flags.Type
-	newF.Name = *flags.New
-	newF.ID = files.GetNewID()
-	newF.Type = *flags.Type
-
-	if t.IsExist(newF.Path) {
-		panic("The <%s> file already exists, use --open to edit it or --del to delete it.")
-	}
-	f, err := os.Create(*flags.New + *flags.Type)
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-	OpenFile(newF)
+	files.Write()
 }
 
 func OpenFile(f files.File) {

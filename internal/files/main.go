@@ -15,20 +15,26 @@ type File struct {
 	Tmp  bool
 }
 
+var FilesDir string = t.HomeDir + "/.config/GoNotes/files.json"
+
 var Files []File
 
 func Read() []byte {
 	t.Chdir(t.HomeDir)
 	if t.IsNotExist(".config/GoNotes") {
-		t.Mkdir(t.HomeDir + "/.config/GoNotes")
+		t.Mkdir(".config/GoNotes")
 	}
-	if t.IsNotExist(".config/GoNotes/files.json") {
-		err := os.WriteFile(".config/GoNotes/files.json", []byte(""), os.ModePerm)
+	if t.IsNotExist(FilesDir) {
+		bytedata, err := json.Marshal(Files)
+		if err != nil {
+			panic(err)
+		}
+		err = os.WriteFile(FilesDir, bytedata, os.ModePerm)
 		if err != nil {
 			panic(err)
 		}
 	}
-	bytedata, err := os.ReadFile(t.HomeDir + "/.config/GoNotes/files.json")
+	bytedata, err := os.ReadFile(FilesDir)
 	if err != nil {
 		panic(err)
 	}
@@ -39,6 +45,18 @@ func Load() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func Write() {
+	bytedata, err := json.Marshal(Files)
+	if err != nil {
+		panic(err)
+	}
+	err = os.WriteFile(FilesDir, bytedata, os.ModePerm)
+	if err != nil {
+		panic(err)
+	}
+	Load()
 }
 
 func GetNewID() uint {

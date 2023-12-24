@@ -2,6 +2,7 @@ package config
 
 import (
 	"encoding/json"
+	"os"
 )
 
 func (c *Config) Update() {
@@ -9,10 +10,9 @@ func (c *Config) Update() {
 	if err != nil {
 		panic(err)
 	}
-	_, err = RawConfigFile.Write(data)
+	err = os.WriteFile(ConfigFile, data, os.ModePerm)
 	if err != nil {
 		panic(err)
 	}
-	RawConfigFile = GetRawFile()
 	MainConf = Read()
 }

@@ -4,16 +4,12 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/Tom5521/GoNotes/internal/files"
 	t "github.com/Tom5521/GoNotes/pkg/tools"
 )
 
 type Config struct {
 	Editor string `json:"Editor"`
-	Files  []files.File
 }
-
-var RawConfigFile = GetRawFile()
 
 func GetRawFile() *os.File {
 	if t.IsNotExist(ConfigFile) {
