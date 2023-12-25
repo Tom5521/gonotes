@@ -5,6 +5,7 @@ import (
 
 	"github.com/Tom5521/GoNotes/internal/files"
 	"github.com/Tom5521/GoNotes/internal/flags"
+	msg "github.com/Tom5521/GoNotes/pkg/messages"
 	t "github.com/Tom5521/GoNotes/pkg/tools"
 )
 
@@ -22,7 +23,7 @@ func CreateTmpFile() {
 	tmpF.Type = fmt.Sprintf(".%s", *flags.Type)
 	// For some damn reason the t.IsExist does not work so I just reverse the t.IsNotExists.
 	if !t.IsNotExist(tmpF.Path) {
-		panic(fmt.Sprintf("The <%s> file already exists, use --open to edit it or --del to delete it.", tmpF.Path))
+		msg.FatalErrorf("The <%s> file already exists, use --open to edit it or --del to delete it.", tmpF.Path)
 	}
 	OpenFile(tmpF)
 	if !t.IsNotExist(tmpF.Path) {
@@ -44,7 +45,7 @@ func CreateFile() {
 	newF.Type = *flags.Type
 
 	if !t.IsNotExist(newF.Path) {
-		panic(fmt.Sprintf("The <%s> file already exists, use --open to edit it or --del to delete it.", newF.Path))
+		msg.FatalErrorf("The <%s> file already exists, use --open to edit it or --del to delete it.", newF.Path)
 	}
 	OpenFile(newF)
 	if !t.IsNotExist(newF.Path) {

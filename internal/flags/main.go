@@ -13,5 +13,5 @@ var (
 	Config     = flag.Bool("config", false, "It is used to clarify that you want to edit a configuration.")
 	SetDefault = flag.String("set-editor", "nano", "Set the default editor.")
 	New        = flag.String("new", "", "Create a new note, usage: gonotes --new [note name], the type of the file is specified with --type")
-	Log        = flag.Bool("log", false, "Prints a list of the notes with their name and id")
+	List       = flag.Bool("list", false, "Prints a list of the notes with their name and id")
 )

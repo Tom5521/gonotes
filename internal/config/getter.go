@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	msg "github.com/Tom5521/GoNotes/pkg/messages"
 	"github.com/Tom5521/GoNotes/pkg/tools"
 )
 
@@ -26,12 +27,12 @@ func Read() Config {
 	}
 	data, err := os.ReadFile(ConfigFile)
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 	nConf := Config{}
 	err = json.Unmarshal(data, &nConf)
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 	return nConf
 }

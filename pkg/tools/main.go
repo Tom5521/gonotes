@@ -1,7 +1,6 @@
 package tools
 
 import (
-	"fmt"
 	"os"
 	"os/user"
 )
@@ -27,14 +26,14 @@ func IsNotExist(dir string) bool {
 func Mkdir(dir string) {
 	err := os.Mkdir(dir, os.ModePerm)
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
 }
 
 func Chdir(dir string) {
 	err := os.Chdir(dir)
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
 }
 func Getwd() string {

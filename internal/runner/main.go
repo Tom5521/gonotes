@@ -7,6 +7,7 @@ import (
 	"github.com/Tom5521/GoNotes/internal/config"
 	"github.com/Tom5521/GoNotes/internal/files"
 	"github.com/Tom5521/GoNotes/internal/flags"
+	msg "github.com/Tom5521/GoNotes/pkg/messages"
 	t "github.com/Tom5521/GoNotes/pkg/tools"
 	flag "github.com/spf13/pflag"
 )
@@ -28,8 +29,8 @@ func Init() {
 	}
 	files.Load()
 	CatchTmp()
-	if *flags.Log {
-		PrintLogs()
+	if *flags.List {
+		PrintList()
 		return
 	}
 	if *flags.Delete != "" {
@@ -71,6 +72,6 @@ func OpenFile(f files.File) {
 	cmd.CustomStd(true, true, true)
 	err := cmd.Run()
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 }

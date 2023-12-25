@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 
+	msg "github.com/Tom5521/GoNotes/pkg/messages"
 	t "github.com/Tom5521/GoNotes/pkg/tools"
 )
 
@@ -27,34 +28,34 @@ func Read() []byte {
 	if t.IsNotExist(FilesDir) {
 		bytedata, err := json.Marshal(Files)
 		if err != nil {
-			panic(err)
+			msg.FatalError(err)
 		}
 		err = os.WriteFile(FilesDir, bytedata, os.ModePerm)
 		if err != nil {
-			panic(err)
+			msg.FatalError(err)
 		}
 	}
 	bytedata, err := os.ReadFile(FilesDir)
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 	return bytedata
 }
 func Load() {
 	err := json.Unmarshal(Read(), &Files)
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 }
 
 func Write() {
 	bytedata, err := json.Marshal(Files)
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 	err = os.WriteFile(FilesDir, bytedata, os.ModePerm)
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 	Load()
 }

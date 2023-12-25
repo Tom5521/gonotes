@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 
+	msg "github.com/Tom5521/GoNotes/pkg/messages"
 	t "github.com/Tom5521/GoNotes/pkg/tools"
 )
 
@@ -17,7 +18,7 @@ func GetRawFile() *os.File {
 	}
 	f, err := os.Open(ConfigFile)
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 	return f
 }
@@ -25,18 +26,18 @@ func GetRawFile() *os.File {
 func CreateConfigFile() {
 	data, err := json.Marshal(Config{Editor: "nano"})
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 	if t.IsNotExist(ConfigDir) {
 		t.Mkdir(ConfigDir)
 	}
 	file, err := os.Create(ConfigFile)
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 	defer file.Close()
 	_, err = file.Write(data)
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 }
