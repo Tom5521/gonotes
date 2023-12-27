@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Tom5521/GoNotes/internal/files"
+	"github.com/Tom5521/GoNotes/internal/flags"
 	"github.com/gookit/color"
 )
 
@@ -12,6 +13,11 @@ func PrintList() {
 	red := color.FgRed.Render
 	//yellow := color.FgYellow.Render
 	for _, f := range files.Files {
+		if *flags.Temporal {
+			if !f.Tmp {
+				continue
+			}
+		}
 		fmt.Print(green("Name: "), f.Name)
 		fmt.Print(red(" Path: "), f.Path)
 		fmt.Print(green(" Type: "), f.Type)
