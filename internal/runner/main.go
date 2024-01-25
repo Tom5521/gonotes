@@ -9,46 +9,35 @@ import (
 	"github.com/Tom5521/GoNotes/internal/flags"
 	msg "github.com/Tom5521/GoNotes/pkg/messages"
 	t "github.com/Tom5521/GoNotes/pkg/tools"
-	flag "github.com/spf13/pflag"
 )
 
 var conf = &config.MainConf
+var args = &flags.Args
 
 func Init() {
-	flag.Parse()
-	if *flags.Help {
-		flag.PrintDefaults()
-		return
-	}
-	if *flags.Config {
-		if *flags.SetDefault != conf.Editor {
-			conf.Editor = *flags.SetDefault
-			conf.Update()
-		}
-		return
-	}
+	flags.InitParsers()
 	files.Load()
 	CatchTmp()
-	if *flags.List {
-		PrintList()
-		return
-	}
-	if *flags.Delete != "" {
-		Delete()
-		return
-	}
-	if *flags.Open != "" {
-		Open()
-		return
-	}
-
-	if *flags.New != "" {
-		if *flags.Temporal {
+	switch {
+	case args.New != nil:
+		switch args.Temporal {
+		case true:
 			CreateTmpFile()
-		} else {
+		default:
 			CreateFile()
 		}
-		return
+	case args.Open != "":
+		Open()
+	case args.List:
+		PrintList()
+	case args.Config != nil:
+		switch {
+		case args.Config.DefaultEditor != "":
+			conf.Editor = args.Config.DefaultEditor
+			conf.Update()
+		}
+	case args.Delete != "":
+		Delete()
 	}
 }
 

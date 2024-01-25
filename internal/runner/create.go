@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/Tom5521/GoNotes/internal/files"
-	"github.com/Tom5521/GoNotes/internal/flags"
 	msg "github.com/Tom5521/GoNotes/pkg/messages"
 	t "github.com/Tom5521/GoNotes/pkg/tools"
 )
@@ -17,10 +16,10 @@ func CreateTmpFile() {
 	}
 	t.Chdir("GoNotes")
 	tmpF.Tmp = true
-	tmpF.Path = fmt.Sprintf("%s/%s.%s", t.Getwd(), *flags.New, *flags.Type)
-	tmpF.Name = *flags.New
+	tmpF.Path = fmt.Sprintf("%s/%s.%s", t.Getwd(), args.New.Name, args.New.Type)
+	tmpF.Name = args.New.Name
 	tmpF.ID = files.GetNewID()
-	tmpF.Type = fmt.Sprintf(".%s", *flags.Type)
+	tmpF.Type = fmt.Sprintf(".%s", args.New.Type)
 	// For some damn reason the t.IsExist does not work so I just reverse the t.IsNotExists.
 	if !t.IsNotExist(tmpF.Path) {
 		msg.FatalErrorf("The <%s> file already exists, use --open to edit it or --del to delete it.", tmpF.Path)
@@ -39,10 +38,10 @@ func CreateFile() {
 		t.Mkdir(".GoNotes")
 	}
 	t.Chdir(".GoNotes")
-	newF.Path = fmt.Sprintf("%s/%s.%s", t.HomeDir+"/.GoNotes/", *flags.New, *flags.Type)
-	newF.Name = *flags.New
+	newF.Path = fmt.Sprintf("%s/%s.%s", t.HomeDir+"/.GoNotes/", args.New.Name, args.New.Type)
+	newF.Name = args.New.Name
 	newF.ID = files.GetNewID()
-	newF.Type = *flags.Type
+	newF.Type = args.New.Type
 
 	if !t.IsNotExist(newF.Path) {
 		msg.FatalErrorf("The <%s> file already exists, use --open to edit it or --del to delete it.", newF.Path)

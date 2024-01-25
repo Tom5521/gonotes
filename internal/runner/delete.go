@@ -4,12 +4,11 @@ import (
 	"slices"
 
 	"github.com/Tom5521/GoNotes/internal/files"
-	"github.com/Tom5521/GoNotes/internal/flags"
 	msg "github.com/Tom5521/GoNotes/pkg/messages"
 )
 
 func Delete() {
-	i := FindFileIndexByNameOrID(*flags.Delete)
+	i := FindFileIndexByNameOrID(args.Delete)
 	if i == -1 {
 		msg.PanicError("Could not find note ID or name")
 	}

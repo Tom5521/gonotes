@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/Tom5521/GoNotes/internal/files"
-	"github.com/Tom5521/GoNotes/internal/flags"
 	"github.com/gookit/color"
 )
 
@@ -13,7 +12,7 @@ func PrintList() {
 	red := color.FgRed.Render
 	//yellow := color.FgYellow.Render
 	for _, f := range files.Files {
-		if *flags.Temporal {
+		if args.Temporal {
 			if !f.Tmp {
 				continue
 			}
