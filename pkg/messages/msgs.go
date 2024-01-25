@@ -72,3 +72,9 @@ func Info(msg ...any) {
 func Infof(txt string, args ...any) {
 	Info(fmt.Sprintf(txt, args...))
 }
+
+func CustomMsg(title any, titleColor Color, msg ...any) {
+	t := fmt.Sprint(title)
+	m := fmt.Sprint(msg...)
+	fmt.Println(titleColor.Render(t), m)
+}
