@@ -32,8 +32,10 @@ func Init() {
 		PrintList()
 	case args.Config != nil:
 		switch {
-		case args.Config.DefaultEditor != "":
-			conf.Editor = args.Config.DefaultEditor
+		case args.Config.Show:
+			PrintConfig()
+		case args.Config.Editor != conf.Editor:
+			conf.Editor = args.Config.Editor
 			conf.Update()
 		}
 	case args.Delete != "":

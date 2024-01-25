@@ -16,7 +16,8 @@ type NewCmd struct {
 }
 
 type ConfigCmd struct {
-	DefaultEditor string `arg:"-e" default:"nano"`
+	Editor string `arg:"-e" default:"nano" help:"Configures the editor"`
+	Show   bool   `arg:"-P" help:"Prints the configuration values"`
 }
 
 type ArgsStr struct {
