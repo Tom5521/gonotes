@@ -12,15 +12,17 @@ A note program for the linux terminal!
 You can see how to use it running `gonotes --help`
 
 ```bash
-Usage: main [--open OPEN] [--delete DELETE] [--temporal] [--list] <command> [<args>]
+Usage: main [--open FILE] [--del FILE] [--tmp] [--list] [--print FILE] <command> [<args>]
 
 Options:
-  --open OPEN, -o OPEN   Open a file for editing or reading
-  --delete DELETE, -d DELETE
-                         Deletes a file
-  --temporal, -t         Specifies whether the operation will be done in the temporary or constant directory.
+  --open FILE, -o FILE   Open a file for editing or reading
+  --del FILE, -d FILE    Deletes a file
+  --tmp, -t              Specifies whether the operation will be done in the temporary or constant directory.
   --list, -l             List all files, whether temporary or not
+  --print FILE, -p FILE
+                         Print the file showing its details, without opening an editor.
   --help, -h             display this help and exit
+  --version              display version and exit
 
 Commands:
   new                    Create a new text file
