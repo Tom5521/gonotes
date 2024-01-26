@@ -1,11 +1,8 @@
 package flags
 
 import (
-	"fmt"
-
 	bindata "github.com/Tom5521/GoNotes/internal/bin-data"
 	"github.com/alexflint/go-arg"
-	"github.com/gookit/color"
 )
 
 var Args ArgsStr
@@ -25,21 +22,16 @@ type ConfigCmd struct {
 }
 
 type ArgsStr struct {
-	New        *NewCmd    `arg:"subcommand:new" help:"Create a new text file"`
-	Config     *ConfigCmd `arg:"subcommand:config" help:"Configure some program variables"`
-	Open       string     `arg:"-o" help:"Open a file for editing or reading"`
-	Delete     string     `arg:"-d" help:"Deletes a file"`
-	Temporal   bool       `arg:"-t" help:"Specifies whether the operation will be done in the temporary or constant directory."`
-	List       bool       `arg:"-l" help:"List all files, whether temporary or not"`
-	VersionCmd bool       `arg:"-v" help:"Print the program version"`
+	New      *NewCmd    `arg:"subcommand:new" help:"Create a new text file"`
+	Config   *ConfigCmd `arg:"subcommand:config" help:"Configure some program variables"`
+	Open     string     `arg:"-o" help:"Open a file for editing or reading"`
+	Delete   string     `arg:"-d" help:"Deletes a file"`
+	Temporal bool       `arg:"-t" help:"Specifies whether the operation will be done in the temporary or constant directory."`
+	List     bool       `arg:"-l" help:"List all files, whether temporary or not"`
 }
 
 func (ArgsStr) Version() string {
-	red := color.FgRed.Render
-	green := color.FgGreen.Render
-	fmt.Println(red("Licence:"), "Under the MIT licence")
-	fmt.Print(green("Version:"), bindata.Version)
-	return ""
+	return bindata.Version
 }
 
 func (ArgsStr) Description() string {
