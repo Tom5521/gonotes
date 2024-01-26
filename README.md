@@ -32,7 +32,7 @@ Commands:
 Install my-project with go
 
 ```bash
-go install github.com/Tom5521/GoNotes/cmd/gonotes@latest
+go install -v github.com/Tom5521/GoNotes/cmd/gonotes@latest
 ```
 
 Or you can copy the [binaries](https://github.com/Tom5521/GoNotes/releases/latest) for your OS into the path
