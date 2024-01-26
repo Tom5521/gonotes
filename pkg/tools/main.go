@@ -3,12 +3,14 @@ package tools
 import (
 	"os"
 	"os/user"
+
+	msg "github.com/Tom5521/GoNotes/pkg/messages"
 )
 
 var HomeDir = func() string {
 	usr, err := user.Current()
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 	return usr.HomeDir
 }()
@@ -26,20 +28,20 @@ func IsNotExist(dir string) bool {
 func Mkdir(dir string) {
 	err := os.Mkdir(dir, os.ModePerm)
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 }
 
 func Chdir(dir string) {
 	err := os.Chdir(dir)
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 }
 func Getwd() string {
 	wd, err := os.Getwd()
 	if err != nil {
-		panic(err)
+		msg.FatalError(err)
 	}
 	return wd
 }

@@ -9,17 +9,18 @@ import (
 )
 
 func CreateTmpFile() {
-	var tmpF files.File
 	t.Chdir("/tmp")
 	if t.IsNotExist("GoNotes") {
 		t.Mkdir("GoNotes")
 	}
 	t.Chdir("GoNotes")
-	tmpF.Tmp = true
-	tmpF.Path = fmt.Sprintf("%s/%s.%s", t.Getwd(), args.New.Name, args.New.Type)
-	tmpF.Name = args.New.Name
-	tmpF.ID = files.GetNewID()
-	tmpF.Type = fmt.Sprintf(".%s", args.New.Type)
+	tmpF := files.File{
+		Tmp:  true,
+		Path: fmt.Sprintf("%s/%s.%s", t.Getwd(), args.New.Name, args.New.Type),
+		Name: args.New.Name,
+		ID:   files.GetNewID(),
+		Type: "." + args.New.Type,
+	}
 	// For some damn reason the t.IsExist does not work so I just reverse the t.IsNotExists.
 	if !t.IsNotExist(tmpF.Path) {
 		msg.FatalErrorf("The <%s> file already exists, use --open to edit it or --del to delete it.", tmpF.Path)
@@ -32,17 +33,17 @@ func CreateTmpFile() {
 }
 
 func CreateFile() {
-	var newF files.File
 	t.Chdir(t.HomeDir)
 	if t.IsNotExist(".GoNotes") {
 		t.Mkdir(".GoNotes")
 	}
 	t.Chdir(".GoNotes")
-	newF.Path = fmt.Sprintf("%s/%s.%s", t.HomeDir+"/.GoNotes/", args.New.Name, args.New.Type)
-	newF.Name = args.New.Name
-	newF.ID = files.GetNewID()
-	newF.Type = args.New.Type
-
+	newF := files.File{
+		Path: fmt.Sprintf("%s/%s.%s", t.HomeDir+"/.GoNotes/", args.New.Name, args.New.Type),
+		Name: args.New.Name,
+		ID:   files.GetNewID(),
+		Type: args.New.Type,
+	}
 	if !t.IsNotExist(newF.Path) {
 		msg.FatalErrorf("The <%s> file already exists, use --open to edit it or --del to delete it.", newF.Path)
 	}

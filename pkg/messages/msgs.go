@@ -8,12 +8,12 @@ import (
 )
 
 type Color interface {
-	Render(...any) string
+	Print(...any)
 }
 
 var (
 	FatalCode  int
-	FatalTxt   = ErrorTxt
+	FatalTxt   = "FATAL ERROR: "
 	PanicTxt   = "PANIC: "
 	ErrorTxt   = "ERROR: "
 	WarningTxt = "WARNING: "
@@ -21,12 +21,13 @@ var (
 )
 
 var (
-	yellow = color.Yellow.Render
-	red    = color.Red.Render
+	orange = color.C256(208)
+	yellow = color.Yellow
+	red    = color.Red
 )
 
 func PanicError(msg ...any) {
-	fmt.Print(red(PanicTxt))
+	orange.Print(PanicTxt)
 	fmt.Println(msg...)
 	panic(fmt.Sprint(msg...))
 }
@@ -35,7 +36,7 @@ func PanicErrorf(text string, args ...any) {
 }
 
 func FatalError(msg ...any) {
-	fmt.Print(red(FatalTxt))
+	red.Print(FatalTxt)
 	fmt.Println(msg...)
 	os.Exit(FatalCode)
 }
@@ -45,7 +46,7 @@ func FatalErrorf(txt string, args ...any) {
 }
 
 func Error(msg ...any) {
-	fmt.Print(red(ErrorTxt))
+	red.Print(ErrorTxt)
 	fmt.Println(msg...)
 }
 func Errorf(txt string, args ...any) {
@@ -53,7 +54,7 @@ func Errorf(txt string, args ...any) {
 }
 
 func Warning(msg ...any) {
-	fmt.Print(yellow(WarningTxt))
+	yellow.Print(WarningTxt)
 	fmt.Println(msg...)
 }
 func Warningf(txt string, args ...any) {
@@ -61,7 +62,7 @@ func Warningf(txt string, args ...any) {
 }
 
 func CustomInfo(c Color, msg ...any) {
-	fmt.Print(c.Render(InfoTxt))
+	c.Print(InfoTxt)
 	fmt.Println(msg...)
 }
 
@@ -76,5 +77,6 @@ func Infof(txt string, args ...any) {
 func CustomMsg(title any, titleColor Color, msg ...any) {
 	t := fmt.Sprint(title)
 	m := fmt.Sprint(msg...)
-	fmt.Println(titleColor.Render(t), m)
+	titleColor.Print(t)
+	fmt.Println(m)
 }

@@ -12,10 +12,10 @@ import (
 const RelativeConfigDir = "%s/.config/GoNotes/"
 
 var (
-	ConfigFilename        = "config.json"
-	ConfigDir             = fmt.Sprintf(RelativeConfigDir, tools.HomeDir)
-	ConfigFile            = ConfigDir + ConfigFilename
-	MainConf       Config = Read()
+	ConfigFilename = "config.json"
+	ConfigDir      = fmt.Sprintf(RelativeConfigDir, tools.HomeDir)
+	ConfigFile     = ConfigDir + ConfigFilename
+	MainConf       = Read()
 )
 
 func Read() Config {
