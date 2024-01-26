@@ -24,10 +24,11 @@ type ConfigCmd struct {
 type ArgsStr struct {
 	New      *NewCmd    `arg:"subcommand:new" help:"Create a new text file"`
 	Config   *ConfigCmd `arg:"subcommand:config" help:"Configure some program variables"`
-	Open     string     `arg:"-o" help:"Open a file for editing or reading"`
-	Delete   string     `arg:"-d" help:"Deletes a file"`
-	Temporal bool       `arg:"-t" help:"Specifies whether the operation will be done in the temporary or constant directory."`
+	Open     string     `arg:"-o" help:"Open a file for editing or reading" placeholder:"FILE"`
+	Delete   string     `arg:"-d,--del" help:"Deletes a file" placeholder:"FILE"`
+	Temporal bool       `arg:"-t,--tmp" help:"Specifies whether the operation will be done in the temporary or constant directory."`
 	List     bool       `arg:"-l" help:"List all files, whether temporary or not"`
+	Print    string     `arg:"-p" help:"Print the file showing its details, without opening an editor." placeholder:"FILE"`
 }
 
 func (ArgsStr) Version() string {

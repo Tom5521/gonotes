@@ -2,6 +2,7 @@ package runner
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/Tom5521/GoNotes/internal/files"
 	msg "github.com/Tom5521/GoNotes/pkg/messages"
@@ -14,9 +15,15 @@ func CreateTmpFile() {
 		t.Mkdir("GoNotes")
 	}
 	t.Chdir("GoNotes")
+	newType := func() string {
+		if strings.HasPrefix(args.New.Type, ".") {
+			return args.New.Type
+		}
+		return "." + args.New.Type
+	}()
 	tmpF := files.File{
 		Tmp:  true,
-		Path: fmt.Sprintf("%s/%s.%s", t.Getwd(), args.New.Name, args.New.Type),
+		Path: fmt.Sprintf("%s/%s", t.Getwd(), args.New.Name+newType),
 		Name: args.New.Name,
 		ID:   files.GetNewID(),
 		Type: "." + args.New.Type,
@@ -38,8 +45,14 @@ func CreateFile() {
 		t.Mkdir(".GoNotes")
 	}
 	t.Chdir(".GoNotes")
+	newType := func() string {
+		if strings.HasPrefix(args.New.Type, ".") {
+			return args.New.Type
+		}
+		return "." + args.New.Type
+	}()
 	newF := files.File{
-		Path: fmt.Sprintf("%s/%s.%s", t.HomeDir+"/.GoNotes/", args.New.Name, args.New.Type),
+		Path: t.HomeDir + "/.GoNotes/" + args.New.Name + newType,
 		Name: args.New.Name,
 		ID:   files.GetNewID(),
 		Type: args.New.Type,

@@ -19,7 +19,7 @@ func FindFileIndexByID(id uint) int {
 	})
 }
 
-func FindFileIndexByNameOrID(nameOrID string) int {
+func Look4All(nameOrID string) int {
 	i := FindFileIndexByName(nameOrID)
 	if i == -1 {
 		id, err := strconv.Atoi(nameOrID)

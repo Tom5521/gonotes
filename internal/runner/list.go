@@ -20,6 +20,7 @@ func PrintList() {
 		fmt.Print(green("Name: "), f.Name)
 		fmt.Print(red(" Path: "), f.Path)
 		fmt.Print(green(" Type: "), f.Type)
-		fmt.Println(red(" ID: "), f.ID)
+		fmt.Print(red(" ID: "), f.ID)
+		fmt.Println(" Temporal:", red(f.Tmp))
 	}
 }

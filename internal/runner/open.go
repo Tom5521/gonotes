@@ -6,7 +6,7 @@ import (
 )
 
 func Open() {
-	i := FindFileIndexByNameOrID(args.Open)
+	i := Look4All(args.Open)
 	if i == -1 {
 		msg.FatalError("Could not find note ID or name")
 	}

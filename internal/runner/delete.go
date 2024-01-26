@@ -8,7 +8,7 @@ import (
 )
 
 func Delete() {
-	i := FindFileIndexByNameOrID(args.Delete)
+	i := Look4All(args.Delete)
 	if i == -1 {
 		msg.PanicError("Could not find note ID or name")
 	}

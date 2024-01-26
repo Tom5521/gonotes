@@ -26,6 +26,8 @@ func Init() {
 		default:
 			CreateFile()
 		}
+	case args.Print != "":
+		PrintFile()
 	case args.Open != "":
 		Open()
 	case args.List:
