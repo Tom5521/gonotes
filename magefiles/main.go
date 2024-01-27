@@ -15,6 +15,23 @@ var (
 	toClean  = []string{
 		"builds",
 	}
+
+	LinuxArmMap = map[string]string{
+		"GOOS":   "linux",
+		"GOARCH": "arm64",
+	}
+	LinuxAmdMap = map[string]string{
+		"GOOS":   "linux",
+		"GOARCH": "amd64",
+	}
+	DarwinArmMap = map[string]string{
+		"GOOS":   "darwin",
+		"GOARCH": "arm64",
+	}
+	DarwinAmdMap = map[string]string{
+		"GOOS":   "darwin",
+		"GOARCH": "amd64",
+	}
 )
 
 func Clean() error {
@@ -29,10 +46,7 @@ func Clean() error {
 
 func (Build) LinuxArm() error {
 	err := sh.RunWithV(
-		map[string]string{
-			"GOOS":   "linux",
-			"GOARCH": "arm64",
-		},
+		LinuxArmMap,
 		"go", "build", "-v", "-o", "builds/gonotes-linux-arm64", MainPath,
 	)
 	return err
@@ -40,7 +54,7 @@ func (Build) LinuxArm() error {
 
 func (Build) LinuxAmd() error {
 	err := sh.RunWithV(
-		map[string]string{},
+		LinuxAmdMap,
 		"go", "build", "-v", "-o", "builds/gonotes-linux-amd64", MainPath,
 	)
 	return err
@@ -48,10 +62,7 @@ func (Build) LinuxAmd() error {
 
 func (Build) DarwinArm() error {
 	err := sh.RunWithV(
-		map[string]string{
-			"GOOS":   "darwin",
-			"GOARCH": "arm64",
-		},
+		DarwinArmMap,
 		"go", "build", "-v", "-o", "builds/gonotes-darwin-arm64", MainPath,
 	)
 	return err
@@ -59,11 +70,8 @@ func (Build) DarwinArm() error {
 
 func (Build) DarwinAmd() error {
 	err := sh.RunWithV(
-		map[string]string{
-			"GOOS":   "darwin",
-			"GOARCH": "amd64",
-		},
-		"go", "build", "-v", "-o", "builds/gonotes-darwin-amd64", MainPath,
+		DarwinAmdMap,
+		"go", "build", "-v", "-o", "builds/gonotes-darwin-amd64", "main.go",
 	)
 	return err
 }
