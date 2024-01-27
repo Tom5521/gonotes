@@ -47,13 +47,13 @@ func Init() {
 
 func CatchTmp() {
 	for _, f := range files.Files {
-		if f.Tmp {
-			if t.IsNotExist(f.Path) {
-				i := FindFileIndexByID(f.ID)
-				if i == -1 {
-					continue
-				}
-				files.Files = slices.Delete(files.Files, i, i+1)
+		if !f.Tmp {
+			continue
+		}
+		if t.IsNotExist(f.Path) {
+			i := FindFileIndexByID(f.ID)
+			if i == -1 {
+				continue
 			}
 			files.Files = slices.Delete(files.Files, i, i+1)
 		}
