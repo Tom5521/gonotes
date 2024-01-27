@@ -16,9 +16,10 @@ type File struct {
 	Tmp  bool
 }
 
-var FilesDir string = t.HomeDir + "/.config/GoNotes/files.json"
-
-var Files []File
+var (
+	FilesDir string = t.HomeDir + "/.config/GoNotes/files.json"
+	Files    []File
+)
 
 func Read() []byte {
 	t.Chdir(t.HomeDir)

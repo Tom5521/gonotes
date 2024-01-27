@@ -55,6 +55,7 @@ func CatchTmp() {
 				}
 				files.Files = slices.Delete(files.Files, i, i+1)
 			}
+			files.Files = slices.Delete(files.Files, i, i+1)
 		}
 	}
 	files.Write()
