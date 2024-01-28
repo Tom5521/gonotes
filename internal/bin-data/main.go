@@ -1,3 +1,3 @@
 package bindata
 
-var Version string = "v1.2.1"
+const Version string = "v1.3.0"
