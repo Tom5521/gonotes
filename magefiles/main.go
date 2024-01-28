@@ -71,7 +71,7 @@ func (Build) DarwinArm() error {
 func (Build) DarwinAmd() error {
 	err := sh.RunWithV(
 		DarwinAmdMap,
-		"go", "build", "-v", "-o", "builds/gonotes-darwin-amd64", "main.go",
+		"go", "build", "-v", "-o", "builds/gonotes-darwin-amd64", MainPath,
 	)
 	return err
 }
