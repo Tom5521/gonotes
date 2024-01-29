@@ -5,6 +5,9 @@ import (
 	"github.com/alexflint/go-arg"
 )
 
+// It turns out that the struct tags are constants, so the illusion of a translation is automatically discarded.
+//
+// To add translations I would have to refactor and change the library to a more complex one, which I don't want to do either.
 var Args ArgsStr
 
 func InitParsers() {
