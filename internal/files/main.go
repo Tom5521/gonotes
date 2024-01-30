@@ -17,7 +17,7 @@ type File struct {
 }
 
 var (
-	FilesDir string = t.HomeDir + "/.config/GoNotes/files.json"
+	FilesDir = t.HomeDir + "/.config/GoNotes/files.json"
 	Files    []File
 )
 
@@ -42,6 +42,7 @@ func Read() []byte {
 	}
 	return bytedata
 }
+
 func Load() {
 	err := json.Unmarshal(Read(), &Files)
 	if err != nil {
@@ -64,7 +65,6 @@ func Write() {
 func GetNewID() uint {
 	if len(Files) == 0 {
 		return 1
-	} else {
-		return Files[len(Files)-1].ID + 1
 	}
+	return Files[len(Files)-1].ID + 1
 }
