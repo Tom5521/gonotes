@@ -38,7 +38,7 @@ func Init() {
 			PrintConfig()
 		case args.Config.Editor != conf.Editor:
 			conf.Editor = args.Config.Editor
-			conf.Update()
+			conf.Write()
 		}
 	case args.Delete != "":
 		Delete()

@@ -5,9 +5,10 @@ import (
 	"os"
 
 	msg "github.com/Tom5521/GoNotes/pkg/messages"
+	t "github.com/Tom5521/GoNotes/pkg/tools"
 )
 
-func (c *Config) Update() {
+func (c *Config) Write() {
 	data, err := json.Marshal(c)
 	if err != nil {
 		msg.FatalError(err)
@@ -16,5 +17,24 @@ func (c *Config) Update() {
 	if err != nil {
 		msg.FatalError(err)
 	}
-	MainConf = Read()
+	c.Read()
+}
+
+func (c *Config) Read() {
+	if t.IsNotExist(ConfigDir) {
+		t.Mkdir(ConfigDir)
+	}
+	if t.IsNotExist(ConfigFile) {
+		CreateConfigFile()
+	}
+	data, err := os.ReadFile(ConfigFile)
+	if err != nil {
+		msg.FatalError(err)
+	}
+	nConf := Config{}
+	err = json.Unmarshal(data, &nConf)
+	if err != nil {
+		msg.FatalError(err)
+	}
+	*c = nConf
 }
