@@ -50,13 +50,14 @@ func CatchTmp() {
 		if !f.Tmp {
 			continue
 		}
-		if t.IsNotExist(f.Path) {
-			i := FindFileIndexByID(f.ID)
-			if i == -1 {
-				continue
-			}
-			files.Files = slices.Delete(files.Files, i, i+1)
+		if t.IsExist(f.Path) {
+			continue
 		}
+		i := FindFileIndexByID(f.ID)
+		if i == -1 {
+			continue
+		}
+		files.Files = slices.Delete(files.Files, i, i+1)
 	}
 	files.Write()
 }
