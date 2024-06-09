@@ -13,6 +13,9 @@ func initNew() *cobra.Command {
 		Short: "Create a new note.",
 		Long:  "Create a new note using your favorite command-line text editor.",
 		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return nil
+		},
 	}
 
 	flags := cmd.Flags()

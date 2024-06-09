@@ -10,6 +10,9 @@ func initConfig() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "config",
 		Short: "Manages the possible program configurations.",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return nil
+		},
 	}
 
 	flags := cmd.Flags()
