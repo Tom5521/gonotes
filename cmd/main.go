@@ -9,7 +9,7 @@ import (
 
 var (
 	root = cobra.Command{
-		Use:   os.Args[0],
+		Use:   "gonotes",
 		Short: "A note manager for the terminal",
 		Long:  "A CLI that allows you to manipulate and manage notes from your terminal using your favorite editor.",
 		RunE: func(cmd *cobra.Command, args []string) (err error) {

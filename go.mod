@@ -3,7 +3,7 @@ module github.com/Tom5521/GoNotes
 go 1.22.4
 
 require (
-	github.com/Tom5521/goconf v1.2.1
+	github.com/Tom5521/goconf v1.3.0
 	github.com/gookit/color v1.5.4
 	github.com/spf13/cobra v1.8.0
 )

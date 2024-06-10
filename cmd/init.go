@@ -1,6 +1,9 @@
 package cmd
 
 import (
+	"os/user"
+	"runtime"
+
 	conf "github.com/Tom5521/goconf"
 	"github.com/gookit/color"
 )
@@ -14,6 +17,28 @@ func init() {
 	settings, initerr = conf.New("gonotes")
 	if initerr != nil {
 		root.PrintErrln(initerr)
+	}
+
+	// Default settings:
+
+	if settings.String("normal-path") == "" {
+		usr, err := user.Current()
+		if err != nil {
+			root.PrintErr(err)
+		}
+
+		settings.SetString("normal-path", usr.HomeDir+"/.GoNotes/")
+	}
+
+	if settings.String("temporal-path") == "" {
+		var path string
+		switch runtime.GOOS {
+		case "windows":
+			path = "C:\\Temp\\"
+		default:
+			path = "/tmp/"
+		}
+		settings.SetString("temporal-path", path)
 	}
 
 	root.SetErrPrefix(color.Red.Render("ERROR:"))

@@ -5,7 +5,6 @@ import (
 )
 
 func initConfig() *cobra.Command {
-	var reset string
 
 	cmd := &cobra.Command{
 		Use:   "config",
@@ -14,16 +13,6 @@ func initConfig() *cobra.Command {
 			return nil
 		},
 	}
-
-	flags := cmd.Flags()
-	flags.StringVar(&reset, "reset", "", "Return the key to its default state.")
-
-	resetCmd := &cobra.Command{
-		Use:   "reset",
-		Short: "Returns all keys to default state.",
-	}
-
-	cmd.AddCommand(resetCmd)
 
 	return cmd
 }
