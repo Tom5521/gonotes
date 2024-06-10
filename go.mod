@@ -1,4 +1,4 @@
-module github.com/Tom5521/GoNotes
+module github.com/Tom5521/gonotes
 
 go 1.22.4
 

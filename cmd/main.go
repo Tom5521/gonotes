@@ -7,6 +7,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const (
+	NormalPathKey    = "normal-path"
+	TemporalPathKey  = "temporal-path"
+	DefaultTmpKey    = "default-tmp"
+	DefaultNormalKey = "default-normal"
+	DefaultTypeKey   = "default-type"
+	DefaultEditorKey = "default-editor"
+)
+
 var (
 	root = cobra.Command{
 		Use:   "gonotes",
