@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Tom5521/gonotes/internal/files"
 	"github.com/spf13/cobra"
 )
 
@@ -22,13 +23,16 @@ var (
 		Short: "A note manager for the terminal",
 		Long:  "A CLI that allows you to manipulate and manage notes from your terminal using your favorite editor.",
 		Args:  cobra.MinimumNArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) (err error) {
+		PreRunE: func(cmd *cobra.Command, args []string) (err error) {
 			err = cmd.ParseFlags(args)
 			if err != nil {
 				return
 			}
-
+			err = files.LoadFiles()
 			return
+		},
+		PostRunE: func(cmd *cobra.Command, args []string) error {
+			return files.CloseFileReadWriter()
 		},
 	}
 )

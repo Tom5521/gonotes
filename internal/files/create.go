@@ -9,15 +9,16 @@ var (
 	ErrAlreadyExists = errors.New("The file already exists!")
 )
 
-func Create(opts Options) (err error) {
-	fullPath := opts.Path + opts.Name + opts.Type
+func Create(file File, opts Options) (err error) {
+	fullPath := opts.NotesPath + file.Name + file.Type
 
-	if _, err := os.Stat(fullPath); os.IsExist(err) {
+	_, err = os.Stat(fullPath)
+	if err == nil {
 		return ErrAlreadyExists
 	}
 
-	if _, err := os.Stat(opts.Path); os.IsNotExist(err) {
-		err = os.MkdirAll(opts.Path, os.ModePerm)
+	if _, err := os.Stat(opts.NotesPath); os.IsNotExist(err) {
+		err = os.MkdirAll(opts.NotesPath, os.ModePerm)
 		if err != nil {
 			return err
 		}
@@ -28,5 +29,5 @@ func Create(opts Options) (err error) {
 		return
 	}
 
-	return Open(opts)
+	return Open(file, opts)
 }

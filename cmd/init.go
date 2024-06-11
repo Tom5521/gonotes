@@ -3,8 +3,10 @@ package cmd
 import (
 	"os/user"
 	"runtime"
+	"strings"
 
 	conf "github.com/Tom5521/goconf"
+	"github.com/Tom5521/gonotes/internal/files"
 	"github.com/gookit/color"
 )
 
@@ -34,9 +36,9 @@ func init() {
 		var path string
 		switch runtime.GOOS {
 		case "windows":
-			path = "C:\\Temp\\"
+			path = "C:\\Temp\\gonotes\\"
 		default:
-			path = "/tmp/"
+			path = "/tmp/gonotes/"
 		}
 		settings.SetString(TemporalPathKey, path)
 	}
@@ -64,8 +66,45 @@ func init() {
 	root.AddCommand(
 		initLicence(),
 		initNew(),
-		initEdit(),
+		initOpen(),
 		initDelete(),
 		initConfig(),
+		initList(),
 	)
+}
+
+func MakeFileAndOptions(filename string) (files.File, files.Options) {
+	return MakeFile(filename), MakeOptions()
+}
+
+func MakeFile(name string) (f files.File) {
+	f.Name = name
+	f.Type = filetype
+	f.Temporal = temporal
+
+	return
+}
+
+func MakeOptions() (opts files.Options) {
+	switch {
+	case temporal:
+		opts.NotesPath = settings.String(TemporalPathKey)
+	default:
+		opts.NotesPath = settings.String(NormalPathKey)
+	}
+
+	var suffix string
+	switch runtime.GOOS {
+	case "windows":
+		suffix = "\\"
+	default:
+		suffix = "/"
+	}
+
+	if !strings.HasSuffix(opts.NotesPath, suffix) {
+		opts.NotesPath += suffix
+	}
+
+	opts.Editor = editor
+	return
 }

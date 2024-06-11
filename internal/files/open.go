@@ -5,8 +5,8 @@ import (
 	"os/exec"
 )
 
-func Open(opts Options) error {
-	fullpath := opts.Path + opts.Name + opts.Type
+func Open(f File, opts Options) error {
+	fullpath := opts.NotesPath + f.Name + f.Type
 	cmd := exec.Command(opts.Editor, fullpath)
 	cmd.Stdout = os.Stdout
 	cmd.Stdin = os.Stdin

@@ -1,9 +1,7 @@
 package files
 
 type Options struct {
-	Path      string
-	Name      string
-	Type      string
+	NotesPath string
 	Editor    string
 	Overwrite bool
 }

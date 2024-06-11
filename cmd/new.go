@@ -15,25 +15,12 @@ func initNew() *cobra.Command {
 		Short: "Create a new note.",
 		Long:  "Create a new note using your favorite command-line text editor.",
 		Args:  cobra.ExactArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			options := files.Options{
-				Name:      args[0],
-				Overwrite: overwrite,
-				Type:      filetype,
-				Editor:    editor,
-			}
-			switch {
-			case temporal:
-				options.Path = settings.String(TemporalPathKey)
-			default:
-				options.Path = settings.String(NormalPathKey)
-			}
+		RunE: func(cmd *cobra.Command, args []string) error {
+			file, options := MakeFileAndOptions(args[0])
+			file.Path = ""
+			options.Overwrite = overwrite
 
-			if options.Path[len(options.Path)-1] != "/"[0] {
-				options.Path += "/"
-			}
-
-			return files.Create(options)
+			return files.Create(file, options)
 		},
 	}
 
