@@ -1,9 +1,8 @@
 package db
 
 import (
-	"bytes"
 	"encoding/json"
-	"io"
+	"fmt"
 	"log"
 	"os"
 	"os/user"
@@ -19,45 +18,41 @@ const (
 )
 
 var (
-	frd *os.File
-
-	HomeDir = func() string {
-		usr, err := user.Current()
-		if err != nil {
-			log.Fatalln(err)
-		}
-		return usr.HomeDir
-	}()
-
-	filesPath = func() string {
-		if runtime.GOOS == "windows" {
-			return HomeDir + windowsPath
-		}
-		return HomeDir + unixPath
-	}()
+	HomeDir   string
+	filesPath string
 )
 
-func CloseFileReadWriter() error {
-	return frd.Close()
+func init() {
+	usr, err := user.Current()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	HomeDir = usr.HomeDir
+
+	if runtime.GOOS == "windows" {
+		filesPath = HomeDir + windowsPath
+	} else {
+		filesPath = HomeDir + windowsPath
+	}
 }
 
 func LoadFiles() (err error) {
+	var file []byte
+	fmt.Println(filesPath)
 	if _, err = os.Stat(filesPath); os.IsNotExist(err) {
-		frd, err = os.Create(filesPath)
-		return
+		_, err = os.Create(filesPath)
+		if err != nil {
+			return
+		}
+		return LoadFiles()
 	} else {
-		frd, err = os.Open(filesPath)
-	}
-	if err != nil {
-		return
+		file, err = os.ReadFile(filesPath)
+		if err != nil {
+			return
+		}
 	}
 
-	bytes, err := io.ReadAll(frd)
-	if err != nil {
-		return
-	}
-	err = json.Unmarshal(bytes, &Files)
-
+	err = json.Unmarshal(file, &Files)
 	return
 }
 
@@ -77,7 +72,6 @@ func WriteFiles() (err error) {
 	if err != nil {
 		return
 	}
-
-	_, err = io.Copy(frd, bytes.NewReader(data))
+	err = os.WriteFile(filesPath, data, os.ModePerm)
 	return
 }

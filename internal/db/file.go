@@ -15,7 +15,6 @@ type File struct {
 	Path     string
 	ID       uint
 	Temporal bool
-	// ReadWriter *os.File
 }
 
 func (f File) String() (str string) {
@@ -37,6 +36,5 @@ func (f File) Open() (err error) {
 	cmd.Stdout = os.Stdout
 	cmd.Stdin = os.Stdin
 	cmd.Stderr = os.Stderr
-
 	return cmd.Run()
 }

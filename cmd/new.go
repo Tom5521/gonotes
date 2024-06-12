@@ -20,7 +20,6 @@ func initNew() *cobra.Command {
 			if err != nil {
 				return
 			}
-
 			return file.Open()
 		},
 	}

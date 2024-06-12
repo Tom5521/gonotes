@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"os/user"
 	"runtime"
 	"strings"
 
@@ -18,39 +17,8 @@ var (
 )
 
 func init() {
-	settings, initerr = conf.New("gonotes")
-	if initerr != nil {
-		root.PrintErrln(initerr)
-	}
-
-	// Default settings:
-
-	if settings.String(NormalPathKey) == "" {
-		usr, err := user.Current()
-		if err != nil {
-			root.PrintErr(err)
-		}
-
-		settings.SetString(NormalPathKey, usr.HomeDir+"/.gonotes/")
-	}
-
-	if settings.String(TemporalPathKey) == "" {
-		var path string
-		switch runtime.GOOS {
-		case "windows":
-			path = "C:\\Temp\\gonotes\\"
-		default:
-			path = "/tmp/gonotes/"
-		}
-		settings.SetString(TemporalPathKey, path)
-	}
-
-	if settings.String(DefaultEditorKey) == "" {
-		settings.SetString(DefaultEditorKey, "nano")
-	}
-	if settings.String(DefaultTypeKey) == "" {
-		settings.SetString(DefaultTypeKey, ".txt")
-	}
+	initSettings()
+	initOptions()
 
 	root.SetErrPrefix(color.Red.Render("ERROR:"))
 
@@ -72,28 +40,29 @@ func init() {
 		initDelete(),
 		initConfig(),
 		initList(),
+		initTest(),
 	)
 }
 
-func InitOptions() {
-	if options.Temporal {
-		options.NotesPath = settings.String(TemporalPathKey)
-	} else {
-		options.NotesPath = settings.String(NormalPathKey)
-	}
+func initOptions() {
+	options.TemporalNotesPath = settings.String(TemporalPathKey)
+	options.NotesPath = settings.String(NormalPathKey)
 
-	var suffix string
-	switch runtime.GOOS {
-	case "windows":
-		suffix = "\\"
-	default:
-		suffix = "/"
-	}
+	checkSuffix := func(v *string) {
+		var suffix string
+		switch runtime.GOOS {
+		case "windows":
+			suffix = "\\"
+		default:
+			suffix = "/"
+		}
 
-	if !strings.HasSuffix(options.NotesPath, suffix) {
-		options.NotesPath += suffix
+		if !strings.HasSuffix(*v, suffix) {
+			*v += suffix
+		}
 	}
-	return
+	checkSuffix(&options.TemporalNotesPath)
+	checkSuffix(&options.NotesPath)
 }
 
 func WorkInProgress(cmd *cobra.Command, args []string) {

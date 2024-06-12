@@ -33,7 +33,6 @@ func makefile(fullPath string, overwrite bool) (err error) {
 			return err
 		}
 	}
-
 	_, err = os.Create(fullPath)
 	if err != nil {
 		return
@@ -55,11 +54,19 @@ func Create(name string, overwrite bool) (f File, err error) {
 		return f, err
 	}
 
-	f.Name = name
-	f.Type = options.Filetype
-	f.Temporal = options.Temporal
-	f.ID = NewID()
-	f.Path = fullPath
+	f = File{
+		Name:     name,
+		Type:     options.Filetype,
+		Temporal: options.Temporal,
+		ID:       NewID(),
+		Path:     fullPath,
+	}
+
+	Files = append(Files, f)
+	err = WriteFiles()
+	if err != nil {
+		return
+	}
 
 	return
 }
