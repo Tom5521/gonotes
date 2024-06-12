@@ -1,13 +1,15 @@
 package cmd
 
 import (
+	"fmt"
 	"os/user"
 	"runtime"
 	"strings"
 
 	conf "github.com/Tom5521/goconf"
-	"github.com/Tom5521/gonotes/internal/files"
+	"github.com/Tom5521/gonotes/internal/options"
 	"github.com/gookit/color"
+	"github.com/spf13/cobra"
 )
 
 var (
@@ -53,12 +55,12 @@ func init() {
 	root.SetErrPrefix(color.Red.Render("ERROR:"))
 
 	flags := root.PersistentFlags()
-	flags.StringVar(&filetype, "type", settings.String(DefaultTypeKey), "Specifies the file type.")
-	flags.StringVar(&editor, "editor", settings.String(DefaultEditorKey), "Specifies the editor to use.")
+	flags.StringVar(&options.Filetype, "type", settings.String(DefaultTypeKey), "Specifies the file type.")
+	flags.StringVar(&options.Editor, "editor", settings.String(DefaultEditorKey), "Specifies the editor to use.")
 
-	flags.BoolVar(&temporal, "tmp", settings.Bool(DefaultTmpKey),
+	flags.BoolVar(&options.Temporal, "tmp", settings.Bool(DefaultTmpKey),
 		"Perform the operation on a file that is specifically located in the temporary directory.")
-	flags.BoolVar(&normal, "normal", settings.Bool(DefaultNormalKey),
+	flags.BoolVar(&options.Normal, "normal", settings.Bool(DefaultNormalKey),
 		"Perform the operation on a file that is specifically located in a normal directory.",
 	)
 	root.MarkFlagsMutuallyExclusive("tmp", "normal")
@@ -73,24 +75,11 @@ func init() {
 	)
 }
 
-func MakeFileAndOptions(filename string) (files.File, files.Options) {
-	return MakeFile(filename), MakeOptions()
-}
-
-func MakeFile(name string) (f files.File) {
-	f.Name = name
-	f.Type = filetype
-	f.Temporal = temporal
-
-	return
-}
-
-func MakeOptions() (opts files.Options) {
-	switch {
-	case temporal:
-		opts.NotesPath = settings.String(TemporalPathKey)
-	default:
-		opts.NotesPath = settings.String(NormalPathKey)
+func InitOptions() {
+	if options.Temporal {
+		options.NotesPath = settings.String(TemporalPathKey)
+	} else {
+		options.NotesPath = settings.String(NormalPathKey)
 	}
 
 	var suffix string
@@ -101,10 +90,12 @@ func MakeOptions() (opts files.Options) {
 		suffix = "/"
 	}
 
-	if !strings.HasSuffix(opts.NotesPath, suffix) {
-		opts.NotesPath += suffix
+	if !strings.HasSuffix(options.NotesPath, suffix) {
+		options.NotesPath += suffix
 	}
-
-	opts.Editor = editor
 	return
+}
+
+func WorkInProgress(cmd *cobra.Command, args []string) {
+	fmt.Println("Work in progress!")
 }

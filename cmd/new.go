@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/Tom5521/gonotes/internal/files"
+	"github.com/Tom5521/gonotes/internal/db"
 	"github.com/spf13/cobra"
 )
 
@@ -15,12 +15,13 @@ func initNew() *cobra.Command {
 		Short: "Create a new note.",
 		Long:  "Create a new note using your favorite command-line text editor.",
 		Args:  cobra.ExactArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			file, options := MakeFileAndOptions(args[0])
-			file.Path = ""
-			options.Overwrite = overwrite
+		RunE: func(cmd *cobra.Command, args []string) (err error) {
+			file, err := db.Create(args[0], overwrite)
+			if err != nil {
+				return
+			}
 
-			return files.Create(file, options)
+			return file.Open()
 		},
 	}
 

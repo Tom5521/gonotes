@@ -1,8 +1,11 @@
-package files
+package db
 
 import (
+	"os"
+	"os/exec"
 	"strconv"
 
+	"github.com/Tom5521/gonotes/internal/options"
 	"github.com/gookit/color"
 )
 
@@ -27,4 +30,13 @@ func (f File) String() (str string) {
 	str += id + "\n"
 
 	return
+}
+
+func (f File) Open() (err error) {
+	cmd := exec.Command(options.Editor, f.Path)
+	cmd.Stdout = os.Stdout
+	cmd.Stdin = os.Stdin
+	cmd.Stderr = os.Stderr
+
+	return cmd.Run()
 }

@@ -1,4 +1,4 @@
-package files
+package db
 
 import (
 	"bytes"
@@ -61,14 +61,15 @@ func LoadFiles() (err error) {
 	return
 }
 
-func CatchTmpFiles() {
+func CatchTmpFiles() error {
 	for i, f := range Files {
 		if _, err := os.Stat(f.Path); f.Temporal && os.IsNotExist(err) {
 			Files = slices.Delete(Files, i, i+1)
-			CatchTmpFiles()
-			return
+			return CatchTmpFiles()
 		}
 	}
+
+	return WriteFiles()
 }
 
 func WriteFiles() (err error) {

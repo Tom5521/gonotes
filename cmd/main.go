@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Tom5521/gonotes/internal/files"
+	"github.com/Tom5521/gonotes/internal/db"
 	"github.com/spf13/cobra"
 )
 
@@ -28,11 +28,19 @@ var (
 			if err != nil {
 				return
 			}
-			err = files.LoadFiles()
+			err = db.LoadFiles()
+			if err != nil {
+				return
+			}
+			err = db.CatchTmpFiles()
+			if err != nil {
+				return
+			}
+			InitOptions()
 			return
 		},
 		PostRunE: func(cmd *cobra.Command, args []string) error {
-			return files.CloseFileReadWriter()
+			return db.CloseFileReadWriter()
 		},
 	}
 )
