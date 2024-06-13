@@ -9,7 +9,7 @@ func initConfig() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "config",
 		Short: "Manages the possible program configurations.",
-		Run:   WorkInProgress,
+		Run:   workInProgress,
 	}
 
 	return cmd

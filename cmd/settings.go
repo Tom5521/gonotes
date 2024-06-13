@@ -31,7 +31,7 @@ func initOptions() {
 }
 
 func initSettings() {
-	settings, initerr = conf.New("gonotes")
+	settings, initerr = conf.New(AppName)
 	if initerr != nil {
 		root.PrintErrln(initerr)
 		return

@@ -27,7 +27,7 @@ func initCat() *cobra.Command {
 				if err != nil {
 					return
 				}
-				fmt.Println(content)
+				fmt.Print(content)
 			}
 			return
 		},

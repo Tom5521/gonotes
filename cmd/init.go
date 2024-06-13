@@ -32,6 +32,6 @@ func init() {
 	)
 }
 
-func WorkInProgress(cmd *cobra.Command, args []string) {
+func workInProgress(cmd *cobra.Command, args []string) {
 	fmt.Println("Work in progress!")
 }

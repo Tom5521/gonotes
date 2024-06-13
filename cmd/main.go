@@ -15,11 +15,13 @@ const (
 	DefaultNormalKey = "default-normal"
 	DefaultTypeKey   = "default-type"
 	DefaultEditorKey = "default-editor"
+
+	AppName = "gonotes"
 )
 
 var (
 	root = cobra.Command{
-		Use:   "gonotes",
+		Use:   AppName,
 		Short: "A note manager for the terminal",
 		Long:  "A CLI that allows you to manipulate and manage notes from your terminal using your favorite editor.",
 		Args:  cobra.MinimumNArgs(1),
