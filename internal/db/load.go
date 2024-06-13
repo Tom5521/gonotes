@@ -2,7 +2,6 @@ package db
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 	"os/user"
@@ -38,7 +37,6 @@ func init() {
 
 func LoadFiles() (err error) {
 	var file []byte
-	fmt.Println(filesPath)
 	if _, err = os.Stat(filesPath); os.IsNotExist(err) {
 		_, err = os.Create(filesPath)
 		if err != nil {
@@ -56,15 +54,14 @@ func LoadFiles() (err error) {
 	return
 }
 
-func CatchTmpFiles() error {
+func CatchTmpFiles() {
 	for i, f := range Files {
 		if _, err := os.Stat(f.Path); f.Temporal && os.IsNotExist(err) {
 			Files = slices.Delete(Files, i, i+1)
-			return CatchTmpFiles()
+			CatchTmpFiles()
+			return
 		}
 	}
-
-	return WriteFiles()
 }
 
 func WriteFiles() (err error) {

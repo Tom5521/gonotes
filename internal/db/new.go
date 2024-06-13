@@ -2,8 +2,6 @@ package db
 
 import (
 	"errors"
-	"os"
-	"path/filepath"
 
 	"github.com/Tom5521/gonotes/internal/options"
 )
@@ -19,27 +17,6 @@ var (
 	ErrAlreadyExists = errors.New("The file already exists!")
 )
 
-func makefile(fullPath string, overwrite bool) (err error) {
-	fdir := filepath.Dir(fullPath)
-
-	_, err = os.Stat(fullPath)
-	if err == nil && !overwrite {
-		return ErrAlreadyExists
-	}
-
-	if _, err := os.Stat(fdir); os.IsNotExist(err) {
-		err = os.MkdirAll(fdir, os.ModePerm)
-		if err != nil {
-			return err
-		}
-	}
-	_, err = os.Create(fullPath)
-	if err != nil {
-		return
-	}
-	return
-}
-
 func Create(name string, overwrite bool) (f File, err error) {
 	var path string
 	if options.Temporal {
@@ -48,25 +25,19 @@ func Create(name string, overwrite bool) (f File, err error) {
 		path = options.NotesPath
 	}
 
-	fullPath := path + name + options.Filetype
-	err = makefile(fullPath, overwrite)
-	if err != nil {
-		return f, err
-	}
-
 	f = File{
 		Name:     name,
 		Type:     options.Filetype,
 		Temporal: options.Temporal,
 		ID:       NewID(),
-		Path:     fullPath,
+		Path:     path + name + options.Filetype,
 	}
-
-	Files = append(Files, f)
-	err = WriteFiles()
+	err = f.create(overwrite)
 	if err != nil {
 		return
 	}
+
+	Files = append(Files, f)
 
 	return
 }

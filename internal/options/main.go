@@ -8,4 +8,10 @@ var (
 
 	NotesPath         string
 	TemporalNotesPath string
+
+	ByID   bool
+	ByName bool
+
+	CustomID   int
+	CustomName string
 )

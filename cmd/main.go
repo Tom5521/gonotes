@@ -28,11 +28,11 @@ var (
 			if err != nil {
 				return
 			}
-			err = db.CatchTmpFiles()
-			if err != nil {
-				return
-			}
+			db.CatchTmpFiles()
 			return
+		},
+		PersistentPostRunE: func(cmd *cobra.Command, args []string) error {
+			return db.WriteFiles()
 		},
 	}
 )
