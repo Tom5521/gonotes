@@ -13,7 +13,7 @@ func initList() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "list",
 		Short: "Lists all files detected in normal and temporal storage.",
-		Args:  cobra.ExactArgs(0),
+		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			printNormal := func() {
 				color.Red.Println("**Normal Files**")

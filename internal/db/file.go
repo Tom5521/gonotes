@@ -18,6 +18,11 @@ type File struct {
 	Temporal bool
 }
 
+func (f File) Content() (string, error) {
+	data, err := os.ReadFile(f.Path)
+	return string(data), err
+}
+
 func (f File) String() (str string) {
 	render := color.Green.Render
 

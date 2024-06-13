@@ -37,6 +37,7 @@ func initLicence() *cobra.Command {
 	var cmd = &cobra.Command{
 		Use:   "licence",
 		Short: "Prints the current program license.",
+		Args:  cobra.NoArgs,
 		Run: func(cmd *cobra.Command, args []string) {
 			switch {
 			case long:

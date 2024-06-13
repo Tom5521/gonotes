@@ -27,6 +27,7 @@ func init() {
 		initConfig(),
 		initList(),
 		initSearch(),
+		initCat(),
 		initTest(),
 	)
 }
