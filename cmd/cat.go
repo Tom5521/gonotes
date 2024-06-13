@@ -12,7 +12,11 @@ func initCat() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "cat",
 		Short: "Performs golang's equivalent of \"cat\" from unix shells to the file.",
-		Args:  cobra.MinimumNArgs(1),
+		Long: `Performs golang's equivalent of "cat" from unix shells to the file.
+The command also has the following aliases:
+"print".`,
+		Args:    cobra.MinimumNArgs(1),
+		Aliases: []string{"print"},
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			for _, v := range args {
 				var (

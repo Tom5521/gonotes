@@ -10,8 +10,11 @@ func initDelete() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "delete",
 		Short: "Deletes a file by its name.",
-		Long:  "Delete a file by its name, an error will occur if there are two files with the same name in the normal or temporary storage, also if there are two files with the same name but different file type. In those cases you must specify with a flag.",
-		Args:  cobra.MinimumNArgs(1),
+		Long: `Delete a file by its name, an error will occur if there are two files with the same name in the normal or temporary storage, also if there are two files with the same name but different file type. In those cases you must specify with a flag.
+To add more, the command also has the following aliases:
+"remove", "del", "rm", "d".`,
+		Args:    cobra.MinimumNArgs(1),
+		Aliases: []string{"remove", "del", "rm", "d"},
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			for _, v := range args {
 				var file db.File

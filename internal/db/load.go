@@ -50,8 +50,7 @@ func LoadFiles() (err error) {
 		}
 	}
 
-	err = json.Unmarshal(file, &Files)
-	return
+	return json.Unmarshal(file, &Files)
 }
 
 func CatchTmpFiles() {
@@ -69,6 +68,5 @@ func WriteFiles() (err error) {
 	if err != nil {
 		return
 	}
-	err = os.WriteFile(filesPath, data, os.ModePerm)
-	return
+	return os.WriteFile(filesPath, data, os.ModePerm)
 }
