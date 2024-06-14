@@ -13,8 +13,9 @@ func initOpen() *cobra.Command {
 		Long: `Open a existent file that is in the normal or temporal storange.
 The command also has the following aliases:
 "edit".`,
-		Args:    cobra.MinimumNArgs(1),
-		Aliases: []string{"edit"},
+		Args:              cobra.MinimumNArgs(1),
+		Aliases:           []string{"edit"},
+		ValidArgsFunction: validNotes,
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			for _, v := range args {
 				var file db.File

@@ -1,11 +1,8 @@
 package cmd
 
 import (
-	"fmt"
-
 	conf "github.com/Tom5521/goconf"
 	"github.com/gookit/color"
-	"github.com/spf13/cobra"
 )
 
 var (
@@ -28,10 +25,7 @@ func init() {
 		initList(),
 		initSearch(),
 		initCat(),
+		initPrintSettings(),
 		initTest(),
 	)
-}
-
-func workInProgress(cmd *cobra.Command, args []string) {
-	fmt.Println("Work in progress!")
 }
