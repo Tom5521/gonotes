@@ -26,6 +26,7 @@ func init() {
 		initSearch(),
 		initCat(),
 		initPrintSettings(),
+		initMd(),
 		initTest(),
 	)
 }

@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	root = cobra.Command{
+	root = &cobra.Command{
 		Use:     AppName,
 		Short:   "A note manager for the terminal",
 		Long:    "A CLI that allows you to manipulate and manage notes from your terminal using your favorite editor.",

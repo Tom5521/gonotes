@@ -1,10 +1,8 @@
 package cmd
 
 import (
-	"fmt"
-
-	"github.com/Tom5521/gonotes/internal/options"
 	"github.com/spf13/cobra"
+	"github.com/spf13/cobra/doc"
 )
 
 func initTest() *cobra.Command {
@@ -12,9 +10,7 @@ func initTest() *cobra.Command {
 		Use:    "test",
 		Hidden: true,
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			fmt.Println(settings.String(NormalPathKey))
-			fmt.Printf("\"%s\"\n", options.NotesPath)
-			return
+			return doc.GenMarkdownTree(root, "docs")
 		},
 	}
 

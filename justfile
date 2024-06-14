@@ -136,3 +136,7 @@ commit:
 gh-release:
     just release
     gh release create {{ short-latest-tag }} ./builds/* --generate-notes
+gen-markdown-docs:
+    rm -rf docs
+    just build-local
+    ./{{app-name}} gen-markdown-tree docs
