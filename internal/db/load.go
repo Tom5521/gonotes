@@ -15,15 +15,6 @@ var Files []File
 const (
 	unixPath    = "/.config/gonotes/files.json"
 	windowsPath = "/.gonotes/files.json"
-
-	defaultConfigs = `{
-        "default-editor": "nano",
-        "default-normal": false,
-        "default-tmp": false,
-        "default-type": ".txt",
-        "normal-path": "/root/.gonotes/",
-        "temporal-path": "/tmp/gonotes/"
-}`
 )
 
 var (
@@ -54,7 +45,7 @@ func LoadFiles() (err error) {
 		}
 	}
 	if _, err = os.Stat(filesPath); os.IsNotExist(err) {
-		err = os.WriteFile(filesPath, []byte(defaultConfigs), os.ModePerm)
+		err = WriteFiles()
 		if err != nil {
 			return
 		}
