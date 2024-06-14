@@ -6,11 +6,11 @@ require (
 	github.com/Tom5521/goconf v1.3.0
 	github.com/gookit/color v1.5.4
 	github.com/sahilm/fuzzy v0.1.1
-	github.com/spf13/cobra v1.8.0
+	github.com/spf13/cobra v1.8.1
 )
 
 require (
-	github.com/cpuguy83/go-md2man/v2 v2.0.3 // indirect
+	github.com/cpuguy83/go-md2man/v2 v2.0.4 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/kylelemons/godebug v1.1.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
