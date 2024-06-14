@@ -17,8 +17,7 @@ go-install-version-flag := '-ldflags "-X github.com/Tom5521/gonotes/meta.Version
 fish-completion-path := "/usr/share/fish/vendor_completions.d/"
 bash-completion-path := "/usr/share/bash-completion/completions/"
 zsh-completion-path := "/usr/share/zsh/site-functions/"
-linux-install-path := "/usr/bin/fsize"
-linux-local-install-path := "~/.local/bin/fsize"
+linux-install-path := "/usr/bin/gonotes"
 
 default:
     go build -v .
@@ -90,12 +89,12 @@ go-reinstall:
 [unix]
 install:
     just build-local
-    cp fsize {{ linux-install-path }}
-    fsize --gen-bash-completion {{ bash-completion-path }}{{ app-name }}
+    cp {{app-name}} {{ linux-install-path }}
+    ./{{app-name}} completion bash > {{ bash-completion-path }}{{ app-name }}
     -which fish && \
-    fsize --gen-fish-completion {{ fish-completion-path }}{{ app-name }}.fish 
+    ./{{app-name}} completion fish > {{ fish-completion-path }}{{ app-name }}.fish 
     -which zsh && \
-    fsize --gen-zsh-completion {{ zsh-completion-path }}_{{ app-name }}
+    ./{{app-name}} completion zsh > {{ zsh-completion-path }}_{{ app-name }}
 
 [confirm]
 [windows]
@@ -124,9 +123,10 @@ reinstall:
 generate-completions:
     mkdir -p completions
     just build-local
-    ./fsize --gen-bash-completion ./completions/{{ app-name }}.sh
-    ./fsize --gen-fish-completion ./completions/{{ app-name }}.fish
-    ./fsize --gen-zsh-completion ./completions/_{{ app-name }}
+    ./{{app-name}} completion bash > completions/bash
+    ./{{app-name}} completion fish > completions/fish
+    ./{{app-name}} completion zsh > completions/zsh
+    ./{{app-name}} completion powershell > completions/powershell
 
 commit:
     git add .

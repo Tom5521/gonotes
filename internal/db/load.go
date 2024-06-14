@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/user"
+	"path/filepath"
 	"runtime"
 	"slices"
 )
@@ -14,6 +15,15 @@ var Files []File
 const (
 	unixPath    = "/.config/gonotes/files.json"
 	windowsPath = "/.gonotes/files.json"
+
+	defaultConfigs = `{
+        "default-editor": "nano",
+        "default-normal": false,
+        "default-tmp": false,
+        "default-type": ".txt",
+        "normal-path": "/root/.gonotes/",
+        "temporal-path": "/tmp/gonotes/"
+}`
 )
 
 var (
@@ -37,8 +47,14 @@ func init() {
 
 func LoadFiles() (err error) {
 	var file []byte
+	if _, err = os.Stat(filepath.Dir(filesPath)); os.IsNotExist(err) {
+		err = os.MkdirAll(filepath.Dir(filesPath), os.ModePerm)
+		if err != nil {
+			return
+		}
+	}
 	if _, err = os.Stat(filesPath); os.IsNotExist(err) {
-		_, err = os.Create(filesPath)
+		err = os.WriteFile(filesPath, []byte(defaultConfigs), os.ModePerm)
 		if err != nil {
 			return
 		}
