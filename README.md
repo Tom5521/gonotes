@@ -18,7 +18,7 @@ Usage:
   gonotes [command]
 
 Available Commands:
-  cat               Performs golang's equivalent of "cat" from unix shells to the file.
+  cat               Performs golang\'s equivalent of "cat" from unix shells to the file.
   completion        Generate the autocompletion script for the specified shell
   config            Manages the possible program configurations.
   delete            Deletes a file by its name.
