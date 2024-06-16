@@ -9,8 +9,9 @@ long-latest-tag := `git describe --tags`
 
 # Flags
 
-version-flag := '-ldflags "-X github.com/Tom5521/gonotes/meta.Version=' + short-latest-tag + '"'
-go-install-version-flag := '-ldflags "-X github.com/Tom5521/gonotes/meta.Version=' + short-latest-tag + '"'
+release-flag := "-tags release "
+version-flag := release-flag + '-ldflags "-X github.com/Tom5521/gonotes/meta.Version=' + short-latest-tag + '"'
+go-install-version-flag := release-flag + '-ldflags "-X github.com/Tom5521/gonotes/meta.Version=' + short-latest-tag + '"'
 
 # Paths
 
@@ -89,12 +90,12 @@ go-reinstall:
 [unix]
 install:
     just build-local
-    cp {{app-name}} {{ linux-install-path }}
-    ./{{app-name}} completion bash > {{ bash-completion-path }}{{ app-name }}
+    cp {{ app-name }} {{ linux-install-path }}
+    ./{{ app-name }} completion bash > {{ bash-completion-path }}{{ app-name }}
     -which fish && \
-    ./{{app-name}} completion fish > {{ fish-completion-path }}{{ app-name }}.fish 
+    ./{{ app-name }} completion fish > {{ fish-completion-path }}{{ app-name }}.fish 
     -which zsh && \
-    ./{{app-name}} completion zsh > {{ zsh-completion-path }}_{{ app-name }}
+    ./{{ app-name }} completion zsh > {{ zsh-completion-path }}_{{ app-name }}
 
 [confirm]
 [windows]
@@ -123,10 +124,10 @@ reinstall:
 generate-completions:
     mkdir -p completions
     just build-local
-    ./{{app-name}} completion bash > completions/bash
-    ./{{app-name}} completion fish > completions/fish
-    ./{{app-name}} completion zsh > completions/zsh
-    ./{{app-name}} completion powershell > completions/powershell
+    ./{{ app-name }} completion bash > completions/bash
+    ./{{ app-name }} completion fish > completions/fish
+    ./{{ app-name }} completion zsh > completions/zsh
+    ./{{ app-name }} completion powershell > completions/powershell
 
 commit:
     git add .
@@ -136,7 +137,8 @@ commit:
 gh-release:
     just release
     gh release create {{ short-latest-tag }} ./builds/* --generate-notes
+
 gen-markdown-docs:
     rm -rf docs
     just build-local
-    ./{{app-name}} gen-markdown-tree docs
+    ./{{ app-name }} gen-markdown-tree docs

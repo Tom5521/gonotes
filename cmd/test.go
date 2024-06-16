@@ -1,3 +1,6 @@
+//go:build !release
+// +build !release
+
 package cmd
 
 import (
@@ -5,14 +8,13 @@ import (
 	"github.com/spf13/cobra/doc"
 )
 
-func initTest() *cobra.Command {
+func init() {
 	cmd := &cobra.Command{
-		Use:    "test",
-		Hidden: true,
+		Use: "test",
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			return doc.GenMarkdownTree(root, "docs")
 		},
 	}
 
-	return cmd
+	root.AddCommand(cmd)
 }

@@ -27,6 +27,5 @@ func init() {
 		initCat(),
 		initPrintSettings(),
 		initMd(),
-		initTest(),
 	)
 }
