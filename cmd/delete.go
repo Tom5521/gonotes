@@ -24,7 +24,7 @@ To add more, the command also has the following aliases:
 					return
 				}
 
-				err = db.Delete(file)
+				err = file.Delete()
 				if err != nil {
 					return
 				}

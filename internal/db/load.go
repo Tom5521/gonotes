@@ -60,11 +60,11 @@ func LoadFiles() (err error) {
 	return json.Unmarshal(file, &Files)
 }
 
-func CatchTmpFiles() {
+func CatchBadFiles() {
 	for i, f := range Files {
-		if _, err := os.Stat(f.Path); f.Temporal && os.IsNotExist(err) {
+		if _, err := os.Stat(f.Path); os.IsNotExist(err) {
 			Files = slices.Delete(Files, i, i+1)
-			CatchTmpFiles()
+			CatchBadFiles()
 			return
 		}
 	}

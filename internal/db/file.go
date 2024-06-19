@@ -1,10 +1,11 @@
 package db
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strconv"
+	"slices"
 
 	"github.com/Tom5521/gonotes/internal/options"
 	"github.com/gookit/color"
@@ -24,15 +25,18 @@ func (f File) Content() (string, error) {
 }
 
 func (f File) String() (str string) {
-	render := color.Green.Render
+	render := func(title string, content ...any) {
+		r := color.Green.Render
+		str += r(title+": ") + fmt.Sprint(content...) + "\n"
+	}
 
-	name := render("Name: ") + f.Name
-	ftype := render("Type: ") + f.Type
-	id := render("ID: ") + strconv.Itoa(int(f.ID))
+	render("Name", f.Name)
+	render("Type", f.Type)
+	render("ID", f.ID)
 
-	str += name + "\n"
-	str += ftype + "\n"
-	str += id + "\n"
+	if f.Temporal {
+		render("Temporal", f.Temporal)
+	}
 
 	return
 }
@@ -64,4 +68,19 @@ func (f File) Open() (err error) {
 	cmd.Stdin = os.Stdin
 	cmd.Stderr = os.Stderr
 	return cmd.Run()
+}
+
+func (file File) Delete() (err error) {
+	err = os.Remove(file.Path)
+	if err != nil {
+		return
+	}
+	for i, f := range Files {
+		if file.ID == f.ID {
+			Files = slices.Delete(Files, i, i+1)
+			return
+		}
+	}
+
+	return fmt.Errorf("File not found")
 }

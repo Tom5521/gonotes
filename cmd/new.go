@@ -13,10 +13,8 @@ func initNew() *cobra.Command {
 	var cmd = &cobra.Command{
 		Use:   "new",
 		Short: "Create a new note.",
-		Long: `Create a new note using your favorite command-line text editor.
-The command also has the following aliases:
-"create", "make", "add".`,
-		Args: cobra.ExactArgs(1),
+		Long:  `Create a new note using your favorite command-line text editor.`,
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			file, err := db.Create(args[0], overwrite)
 			if err != nil {

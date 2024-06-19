@@ -46,7 +46,10 @@ The command also has the following aliases:
 		Aliases: []string{"ls", "l"},
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			for _, file := range db.Files {
-				if file.Temporal && !options.Temporal {
+				if !file.Temporal && options.Temporal {
+					continue
+				}
+				if file.Temporal && options.Normal {
 					continue
 				}
 				fmt.Println("----")

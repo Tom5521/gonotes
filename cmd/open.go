@@ -8,11 +8,9 @@ import (
 
 func initOpen() *cobra.Command {
 	var cmd = &cobra.Command{
-		Use:   "open",
-		Short: "Open a existent file",
-		Long: `Open a existent file that is in the normal or temporal storange.
-The command also has the following aliases:
-"edit".`,
+		Use:               "open",
+		Short:             "Open a existent file",
+		Long:              `Open a existent file that is in the normal or temporal storange.`,
 		Args:              cobra.MinimumNArgs(1),
 		Aliases:           []string{"edit"},
 		ValidArgsFunction: validNotes,
