@@ -11,14 +11,14 @@ A note program for the linux terminal!
 
 You can see how to use it running `gonotes --help`
 
-```bash
+```
 A CLI that allows you to manipulate and manage notes from your terminal using your favorite editor.
 
 Usage:
   gonotes [command]
 
 Available Commands:
-  cat               Performs golang\'s equivalent of "cat" from unix shells to the file.
+  cat               Performs golang's equivalent of "cat" from unix shells to the file.
   completion        Generate the autocompletion script for the specified shell
   config            Manages the possible program configurations.
   delete            Deletes a file by its name.
