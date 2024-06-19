@@ -42,7 +42,10 @@ func Deep(arg string) (file db.File, err error) {
 		(file.ID != uint(options.CustomID) || file.Name != options.CustomName) {
 		err = ErrNotFound
 	}
-	if file.Temporal && !options.Temporal {
+	if options.Temporal && !file.Temporal {
+		err = ErrNotFound
+	}
+	if options.Normal && file.Temporal {
 		err = ErrNotFound
 	}
 
