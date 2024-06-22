@@ -12,6 +12,24 @@ import (
 
 var Files []File
 
+func TemporalFiles() (files []File) {
+	for _, f := range Files {
+		if f.Temporal {
+			files = append(files, f)
+		}
+	}
+	return
+}
+
+func NormalFiles() (files []File) {
+	for _, f := range Files {
+		if !f.Temporal {
+			files = append(files, f)
+		}
+	}
+	return
+}
+
 const (
 	unixPath    = "/.config/gonotes/files.json"
 	windowsPath = "/.gonotes/files.json"

@@ -1,6 +1,7 @@
 package db
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -49,10 +50,10 @@ func (f File) create(overwrite bool) (err error) {
 		return ErrAlreadyExists
 	}
 
-	if _, err := os.Stat(fdir); os.IsNotExist(err) {
+	if _, err = os.Stat(fdir); os.IsNotExist(err) {
 		err = os.MkdirAll(fdir, os.ModePerm)
 		if err != nil {
-			return err
+			return
 		}
 	}
 	_, err = os.Create(f.Path)
@@ -82,5 +83,5 @@ func (file File) Delete() (err error) {
 		}
 	}
 
-	return fmt.Errorf("File not found")
+	return errors.New("File not found")
 }
