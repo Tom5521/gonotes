@@ -14,7 +14,7 @@ func validNotes(cmd *cobra.Command, args []string, toComplete string) ([]string,
 	arg := args[len(args)-1]
 
 	var names, ids []string
-	for _, file := range db.Files {
+	for _, file := range db.Files.Slice() {
 		ids = append(ids, strconv.FormatUint(uint64(file.ID), 10))
 		names = append(names, file.Name)
 	}
@@ -45,7 +45,7 @@ The command also has the following aliases:
 		Args:    cobra.NoArgs,
 		Aliases: []string{"ls", "l"},
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			for _, file := range db.Files {
+			for _, file := range db.Files.Slice() {
 				if !file.Temporal && options.Temporal {
 					continue
 				}

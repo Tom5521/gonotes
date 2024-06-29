@@ -1,5 +1,7 @@
 github.com/Tom5521/goconf v1.3.0 h1:54HEWdMQOegdo8pG/xOiEPJ9gCBs/8rRCQ/W4Y4AKIU=
 github.com/Tom5521/goconf v1.3.0/go.mod h1:lZAjzEMrm0m+qGtwDmC+1bc5dLD4+GCgPtNNcBc5pOc=
+github.com/Tom5521/slicelib v1.2.0 h1:WFazcmAP+75GAoLOla5C/AMHN5/O3ZKT1fGRYeSkmsM=
+github.com/Tom5521/slicelib v1.2.0/go.mod h1:nhK1/ioT7zEwbkLNK6QQrghiKy2AA3tS56HCIqvTmxo=
 github.com/cpuguy83/go-md2man/v2 v2.0.4 h1:wfIWP927BUkWJb2NmU/kNDYIBTh/ziUX91+lVfRxZq4=
 github.com/cpuguy83/go-md2man/v2 v2.0.4/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=

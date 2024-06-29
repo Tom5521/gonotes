@@ -6,7 +6,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"slices"
 
 	"github.com/Tom5521/gonotes/internal/options"
 	"github.com/gookit/color"
@@ -76,12 +75,9 @@ func (file File) Delete() (err error) {
 	if err != nil {
 		return
 	}
-	for i, f := range Files {
-		if file.ID == f.ID {
-			Files = slices.Delete(Files, i, i+1)
-			return
-		}
-	}
+	Files.Filter(func(f File) bool {
+		return f.ID != file.ID
+	})
 
 	return errors.New("File not found")
 }

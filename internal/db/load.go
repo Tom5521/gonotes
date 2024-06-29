@@ -7,27 +7,27 @@ import (
 	"os/user"
 	"path/filepath"
 	"runtime"
-	"slices"
+
+	"github.com/Tom5521/slicelib"
 )
 
-var Files []File
+var Files slicelib.Slice[File]
 
-func TemporalFiles() (files []File) {
-	for _, f := range Files {
-		if f.Temporal {
-			files = append(files, f)
-		}
-	}
-	return
+func TemporalFiles() slicelib.Slice[File] {
+	s := Files.Copy()
+	s.Filter(func(f File) bool {
+		return f.Temporal
+	})
+
+	return s
 }
 
-func NormalFiles() (files []File) {
-	for _, f := range Files {
-		if !f.Temporal {
-			files = append(files, f)
-		}
-	}
-	return
+func NormalFiles() slicelib.Slice[File] {
+	s := Files.Copy()
+	s.Filter(func(f File) bool {
+		return !f.Temporal
+	})
+	return s
 }
 
 const (
@@ -75,21 +75,18 @@ func LoadFiles() (err error) {
 		}
 	}
 
-	return json.Unmarshal(file, &Files)
+	return json.Unmarshal(file, Files.SliceP())
 }
 
 func CatchBadFiles() {
-	for i, f := range Files {
-		if _, err := os.Stat(f.Path); os.IsNotExist(err) {
-			Files = slices.Delete(Files, i, i+1)
-			CatchBadFiles()
-			return
-		}
-	}
+	Files.Filter(func(f File) bool {
+		_, err := os.Stat(f.Path)
+		return !os.IsNotExist(err)
+	})
 }
 
 func WriteFiles() (err error) {
-	data, err := json.Marshal(Files)
+	data, err := json.Marshal(Files.Slice())
 	if err != nil {
 		return
 	}

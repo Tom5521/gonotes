@@ -7,10 +7,11 @@ import (
 )
 
 func NewID() uint {
-	if len(Files) == 0 {
+	if Files.IsEmpty() {
 		return 1
 	}
-	return Files[len(Files)-1].ID + 1
+
+	return Files.Elem(Files.Len()-1).ID + 1
 }
 
 var (
@@ -37,7 +38,7 @@ func Create(name string, overwrite bool) (f File, err error) {
 		return
 	}
 
-	Files = append(Files, f)
+	Files.Append(f)
 
 	return
 }

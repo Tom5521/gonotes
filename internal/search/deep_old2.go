@@ -1,6 +1,3 @@
-//go:build !old
-// +build !old
-
 package search
 
 import (
@@ -8,10 +5,11 @@ import (
 
 	"github.com/Tom5521/gonotes/internal/db"
 	"github.com/Tom5521/gonotes/internal/options"
+	"github.com/Tom5521/slicelib"
 )
 
 func Deep(arg string) (file db.File, err error) {
-	var files []db.File
+	var files slicelib.Slice[db.File]
 
 	// Filter 1: File location.
 	switch {
