@@ -1,6 +1,6 @@
 module github.com/Tom5521/gonotes
 
-go 1.22.4
+go 1.23
 
 require (
 	github.com/Tom5521/goconf v1.3.0
